@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yuyan's 2026 计划</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(60px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-slide-up {
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        body {
+            background-color: #FDFDFD;
+            color: #0f172a;
+        }
+        /* 隐藏初始内容 */
+        #main-content { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen" class="h-screen w-full bg-[#050505] flex flex-col items-center justify-center text-white overflow-hidden">
+        <div class="relative mb-12">
+            <div class="w-32 h-32 border-[2px] border-blue-500/10 border-t-blue-500 rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="rocket" class="text-blue-500 animate-bounce" style="width: 40px; height: 40px;"></i>
+            </div>
+        </div>
+        <div class="text-center">
+            <h1 class="text-4xl font-black italic tracking-[0.2em] mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                LOADING 2026
+            </h1>
+            <p class="text-white/30 font-mono text-xs uppercase tracking-widest">Prepare for Evolution</p>
+        </div>
+    </div>
+
+    <div id="main-content" class="min-h-screen p-6 md:p-16 lg:p-24 transition-opacity duration-1000 opacity-0">
+        <header class="max-w-7xl mx-auto mb-24">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 px-5 py-2 bg-slate-900 text-white rounded-full font-black text-[10px] tracking-[0.3em] uppercase shadow-2xl">
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                        Online Status: Active
+                    </div>
+                    <h1 class="text-6xl md:text-9xl font-black text-slate-900 tracking-[-0.04em] leading-[0.85]">
+                        yuyan's <br/>
+                        <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600">
+                            2026计划
+                        </span>
+                    </h1>
+                </div>
+                
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                    <div class="relative bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center gap-8 transition-transform group-hover:scale-[1.02]">
+                        <div class="text-right border-r border-slate-100 pr-8">
+                            <div class="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Global progress</div>
+                            <div class="text-4xl font-black text-slate-900">00<span class="text-blue-600 text-xl">%</span></div>
+                        </div>
+                        <div class="w-16 h-16 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+                            <i data-lucide="target" class="text-slate-300 group-hover:text-blue-600" style="width: 32px; height: 32px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="mission-grid" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            </main>
+
+        <footer class="max-w-7xl mx-auto mt-32 pb-16 flex flex-col items-center">
+            <div class="flex items-center gap-4 mb-8">
+               <div class="h-[1px] w-12 bg-slate-200"></div>
+               <i data-lucide="gamepad-2" class="text-slate-200" style="width: 24px; height: 24px;"></i>
+               <div class="h-[1px] w-12 bg-slate-200"></div>
+            </div>
+            <p class="text-slate-400 font-black tracking-[0.5em] text-[10px] uppercase">Designed for 2026 Success</p>
+        </footer>
+    </div>
+
+    <script>
+        // 数据配置
+        const themeGradients = {
+            lifestyle: 'from-[#FF6B6B] to-[#FF8E8E]',
+            health: 'from-[#20BF55] to-[#01BAEF]',
+            work: 'from-[#696EFF] to-[#F8ACFF]',
+            knowledge: 'from-[#F7971E] to-[#FFD200]',
+            finance: 'from-[#7000FF] to-[#0011FF]',
+        };
+
+        const missions = [
+            { title: "工作目标", icon: 'briefcase', gradient: themeGradients.work, className: "lg:col-span-2", items: ["主导一个从 0 到 1 的 AI 落地项目", "建立行业影响力，输出 10 篇深度观察", "职级/薪资获得一次阶段性跃迁"] },
+            { title: "生活方式", icon: 'heart', gradient: themeGradients.lifestyle, className: "lg:col-span-1", items: ["去 3 个从未去过的城市深度游", "每周一次不插电（No Phone）周日", "打造一个极简且温馨的居家工作室"] },
+            { title: "知识体系", icon: 'book-open', gradient: themeGradients.knowledge, className: "lg:col-span-1", items: ["精通一套大语言模型微调技术栈", "阅读 24 本跨学科书籍", "习得一项非工作的硬技能"] },
+            { title: "健康指标", icon: 'zap', gradient: themeGradients.health, className: "lg:col-span-2", items: ["体脂率稳定在 20% 以下", "完成一次半程马拉松", "保证 80% 的日子在 23:00 前入睡"] },
+            { title: "财务目标", icon: 'wallet', gradient: themeGradients.finance, className: "lg:col-span-3", items: ["被动收入覆盖 30% 生活开支", "完成年度存款计划目标", "优化投资组合，跑赢大盘指数"] }
+        ];
+
+        // 渲染卡片的函数
+        function renderMissions() {
+            const grid = document.getElementById('mission-grid');
+            let html = missions.map((m, index) => `
+                <div class="group relative overflow-hidden rounded-[2.5rem] p-8 transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] bg-gradient-to-br ${m.gradient} text-white ${m.className} animate-slide-up" style="animation-delay: ${index * 150}ms">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="p-4 bg-white/20 rounded-2xl backdrop-blur-md border border-white/20 shadow-inner">
+                            <i data-lucide="${m.icon}" style="width: 32px; height: 32px;"></i>
+                        </div>
+                        <div class="text-[10px] font-black bg-black/10 px-3 py-1 rounded-full uppercase tracking-[0.2em] backdrop-blur-sm">Phase 2026</div>
+                    </div>
+                    <h3 class="text-3xl font-black mb-6 tracking-tight flex items-center gap-3">
+                        ${m.title} <i data-lucide="sparkles" class="text-white/60" style="width: 20px; height: 20px;"></i>
+                    </h3>
+                    <ul class="space-y-4 relative z-10">
+                        ${m.items.map(item => `
+                            <li class="flex items-start gap-3 text-[1.05rem] font-bold leading-snug group/item">
+                                <span class="mt-1 flex-shrink-0 transition-all duration-300 group-hover/item:rotate-[360deg] group-hover/item:scale-125">
+                                    <i data-lucide="star" fill="currentColor" style="width: 14px; height: 14px;"></i>
+                                </span>
+                                <span class="opacity-90 group-hover/item:opacity-100 transition-opacity underline-offset-4 group-hover/item:underline decoration-white/30">${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="absolute -bottom-12 -right-12 opacity-10 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-1000 ease-in-out">
+                        <i data-lucide="${m.icon}" style="width: 240px; height: 240px;"></i>
+                    </div>
+                </div>
+            `).join('');
+
+            // 添加最后的“解锁”卡片
+            html += `
+                <div class="lg:col-span-3 bg-slate-50 rounded-[3rem] p-12 border-4 border-dashed border-slate-200 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-indigo-400 hover:bg-white transition-all duration-500">
+                    <div class="w-20 h-20 bg-white rounded-[2rem] shadow-xl flex items-center justify-center mb-6 group-hover:rotate-[360deg] transition-all duration-1000">
+                        <i data-lucide="chevron-right" class="text-slate-400 group-hover:text-indigo-600" style="width: 40px; height: 40px;"></i>
+                    </div>
+                    <h4 class="text-3xl font-black text-slate-300 group-hover:text-indigo-600 transition-colors">NEW QUESTS UNLOCKING...</h4>
+                    <p class="text-slate-400 text-sm mt-4 font-bold tracking-widest uppercase">The future belongs to the curious.</p>
+                </div>
+            `;
+            
+            grid.innerHTML = html;
+            // 重新初始化图标
+            lucide.createIcons();
+        }
+
+        // 模拟 React 的加载流程
+        window.onload = () => {
+            renderMissions();
+            
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => {
+                    main.classList.add('opacity-100');
+                }, 50);
+            }, 2200);
+        };
+    </script>
+</body>
+</html>
