@@ -1,10 +1,38 @@
 {
     "阳光电源": {
         "name": "阳光电源",
-        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        "symbol": "300274",
+        "price": 184.09,
+        "prev_close": 178.99,
+        "open": 182.6,
+        "volume": 1133536.0,
+        "change": 5.1,
+        "change_pct": 2.85,
+        "high": 191.71,
+        "low": 180.82,
+        "turnover": 7.13,
+        "pe_ttm": 32.0,
+        "pb": 8.08,
+        "total_mv": 3816.57,
+        "date": "2026-05-27 23:53",
+        "analysis": "阳光电源今日上涨2.85%，收盘价184.09元。换手率7.13%，PE-TTM约32.0倍，总市值3816.57亿元。建议持续关注基本面变化与行业景气度。"
     },
     "山东黄金": {
         "name": "山东黄金",
-        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+        "symbol": "600547",
+        "price": 29.9,
+        "prev_close": 31.46,
+        "open": 31.01,
+        "volume": 526536.0,
+        "change": -1.56,
+        "change_pct": -4.96,
+        "high": 31.34,
+        "low": 29.79,
+        "turnover": 1.46,
+        "pe_ttm": 26.72,
+        "pb": 4.31,
+        "total_mv": 1378.37,
+        "date": "2026-05-27 23:53",
+        "analysis": "山东黄金今日下跌4.96%，收盘价29.9元。换手率1.46%，PE-TTM约26.72倍，总市值1378.37亿元。建议持续关注基本面变化与行业景气度。"
     }
 }

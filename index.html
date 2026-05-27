@@ -5,35 +5,201 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的股票看板</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .stock-name { font-size: 1.5em; font-weight: bold; color: #333; }
-        .price { font-size: 2em; color: #e63946; font-weight: bold; }
-        .metric { display: flex; justify-content: space-between; margin: 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .analysis { background: #e8f4fd; padding: 15px; border-radius: 8px; margin-top: 15px; line-height: 1.6; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf3 100%); 
+            padding: 16px; 
+            color: #2c3e50;
+            min-height: 100vh;
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            padding: 16px;
+        }
+        .header h1 { 
+            font-size: 1.6em; 
+            color: #1a1a2e; 
+            margin-bottom: 4px;
+        }
+        .header .update-time { 
+            font-size: 0.85em; 
+            color: #6c757d; 
+        }
+        .card { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 20px; 
+            margin-bottom: 16px; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .stock-name { 
+            font-size: 1.3em; 
+            font-weight: 600; 
+            color: #1a1a2e;
+        }
+        .stock-code {
+            font-size: 0.85em;
+            color: #999;
+            margin-left: 8px;
+        }
+        .price-area {
+            text-align: right;
+        }
+        .price { 
+            font-size: 1.8em; 
+            font-weight: 700;
+        }
+        .change {
+            font-size: 0.95em;
+            margin-top: 2px;
+        }
+        .up { color: #e63946; }
+        .down { color: #2a9d8f; }
+        .flat { color: #6c757d; }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .metric-item {
+            background: #f8f9fb;
+            padding: 12px;
+            border-radius: 10px;
+        }
+        .metric-label {
+            font-size: 0.78em;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+        .metric-value {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .analysis { 
+            background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+            padding: 14px 16px; 
+            border-radius: 10px; 
+            line-height: 1.7;
+            font-size: 0.92em;
+            border-left: 3px solid #4a90e2;
+        }
+        .analysis-title {
+            font-weight: 600;
+            color: #2c5282;
+            margin-bottom: 6px;
+        }
+        .error {
+            color: #e63946;
+            background: #fff5f5;
+            padding: 12px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-    <h1>📈 每日收盘看板</h1>
+    <div class="header">
+        <h1>📈 每日收盘看板</h1>
+        <div class="update-time" id="updateTime">数据加载中...</div>
+    </div>
     <div id="content"></div>
 
     <script>
-        fetch('data.json')
+        fetch('data.json?t=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
                 let html = '';
+                let latestDate = '';
+                
                 for (let key in data) {
-                    const stock = data[key];
+                    const s = data[key];
+                    
+                    if (s.error) {
+                        html += `
+                            <div class="card">
+                                <div class="stock-name">${s.name} <span class="stock-code">${s.symbol || ''}</span></div>
+                                <div class="error">⚠️ 数据获取失败：${s.error}</div>
+                            </div>
+                        `;
+                        continue;
+                    }
+                    
+                    latestDate = s.date;
+                    const trendClass = s.change_pct > 0 ? 'up' : (s.change_pct < 0 ? 'down' : 'flat');
+                    const trendSymbol = s.change_pct > 0 ? '▲' : (s.change_pct < 0 ? '▼' : '—');
+                    
                     html += `
                         <div class="card">
-                            <div class="stock-name">${stock.name}</div>
-                            <div class="price">¥${stock.price} (${stock.change_pct}%)</div>
-                            <div class="metric"><span>PE-TTM:</span> <span>${stock.pe_ttm}</span></div>
-                            <div class="analysis"><strong>💡 分析结论：</strong><br>${stock.analysis}</div>
+                            <div class="stock-header">
+                                <div>
+                                    <span class="stock-name">${s.name}</span>
+                                    <span class="stock-code">${s.symbol}</span>
+                                </div>
+                                <div class="price-area">
+                                    <div class="price ${trendClass}">¥${s.price.toFixed(2)}</div>
+                                    <div class="change ${trendClass}">${trendSymbol} ${s.change > 0 ? '+' : ''}${s.change.toFixed(2)} (${s.change_pct > 0 ? '+' : ''}${s.change_pct.toFixed(2)}%)</div>
+                                </div>
+                            </div>
+                            
+                            <div class="metrics-grid">
+                                <div class="metric-item">
+                                    <div class="metric-label">今日开盘</div>
+                                    <div class="metric-value">¥${s.open.toFixed(2)}</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">昨日收盘</div>
+                                    <div class="metric-value">¥${s.prev_close.toFixed(2)}</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">最高 / 最低</div>
+                                    <div class="metric-value">${s.high.toFixed(2)} / ${s.low.toFixed(2)}</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">换手率</div>
+                                    <div class="metric-value">${s.turnover.toFixed(2)}%</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">PE-TTM (动态)</div>
+                                    <div class="metric-value">${s.pe_ttm.toFixed(2)}</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">市净率 PB</div>
+                                    <div class="metric-value">${s.pb.toFixed(2)}</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">总市值</div>
+                                    <div class="metric-value">${s.total_mv.toFixed(0)} 亿</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">成交量</div>
+                                    <div class="metric-value">${(s.volume / 10000).toFixed(2)} 万手</div>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis">
+                                <div class="analysis-title">💡 收盘点评</div>
+                                ${s.analysis}
+                            </div>
                         </div>
                     `;
                 }
+                
                 document.getElementById('content').innerHTML = html;
+                document.getElementById('updateTime').innerText = '更新时间：' + latestDate;
+            })
+            .catch(err => {
+                document.getElementById('content').innerHTML = '<div class="card error">数据加载失败，请检查 data.json 是否存在。</div>';
             });
     </script>
 </body>
