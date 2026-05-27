@@ -38,9 +38,7 @@ if __name__ == "__main__":
         "阳光电源": get_stock_info("300274", "阳光电源", "sz"),
         "山东黄金": get_stock_info("600547", "山东黄金", "sh")
     }
-    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "data.json")
-    with open(desktop_path, "w", encoding="utf-8") as f:
+    with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    print(f"✅ 数据更新成功！文件已保存至：{desktop_path}")
-    print("--- 数据预览 ---")
+    print("✅ 数据更新成功！")
     print(json.dumps(data, ensure_ascii=False, indent=2))
