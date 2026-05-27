@@ -1,0 +1,10 @@
+{
+    "阳光电源": {
+        "name": "阳光电源",
+        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    },
+    "山东黄金": {
+        "name": "山东黄金",
+        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    }
+}
