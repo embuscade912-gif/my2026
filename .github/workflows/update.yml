@@ -2,8 +2,8 @@ name: Auto Update Stock Data
 
 on:
   schedule:
-    # 北京时间每天 15:30 (UTC 07:30) 运行，A股收盘后
-    - cron: '30 7 * * 1-5'
+    # 北京时间每天 16:00 (UTC 08:00) 运行
+    - cron: '0 8 * * 1-5'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
@@ -23,10 +23,24 @@ jobs:
       - name: Run fetch script
         run: python fetch_data.py
 
+      - name: Check if data changed
+        id: check
+        run: |
+          if git diff --quiet data.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Commit and push if changed
+        if: steps.check.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git diff --staged --quiet || git commit -m "Auto update stock data $(date +'%Y-%m-%d %H:%M')"
+          git commit -m "Auto update stock data $(date +'%Y-%m-%d %H:%M')"
           git push
+
+      - name: Notify if unchanged
+        if: steps.check.outputs.changed == 'false'
+        run: echo "No new data available, skipping commit."
